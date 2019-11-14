@@ -40,7 +40,7 @@
             }
           }
 
-          $result = $conn->query("SELECT studentID,firstName,lastName, programme,profile_image FROM Student_Credentials Where groupNo= '$groupNo' AND studentID <> '$studentID' ");
+          $result = $conn->query("SELECT studentID,firstName,lastName, programme,profile_image FROM Student_Credentials Where groupNo = '$groupNo' AND studentID <> '$studentID' AND studentID <> '000000000' ");
 
           if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
