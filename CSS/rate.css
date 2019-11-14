@@ -1,0 +1,55 @@
+/************ All Students ************/
+
+.circles{
+    width:30%;
+    margin:10px;
+    float:left;
+}
+.circles img{
+  max-width:100%;
+  height:250px;
+  border-radius: 50%;
+}
+.circles h2{
+  font-family: 'Work Sans', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+ .circles span{
+  font-family: 'Work Sans', sans-serif;
+  font-weight: bold;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+.circles button{
+  margin-top:10px;
+  color:white;
+}
+@media only screen and (max-width: 1200px) {
+  .circles{
+      width:30%;
+  }
+  
+}
+@media only screen and (max-width: 800px) {
+  .circles{
+      width:40%;
+  }
+  
+}
+@media only screen and (max-width:600px) {
+  .circles{
+      width:80%;
+      float:none;
+      margin-bottom: 25px;
+  }
+  
+  #senior-rep p{
+    margin-top: -40px;
+  }
+  #course{
+    margin-top:-30px;
+  }
+}

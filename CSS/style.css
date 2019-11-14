@@ -1,0 +1,152 @@
+/*********** Other CSS files ***/
+@import url("rate.css");
+@import url("tutorDashboard.css");
+
+/*********** Global ***********/
+body{
+  font-family: 'Montserrat', sans-serif !important;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Ubuntu', sans-serif !important;
+}
+a {
+  text-decoration: none !important;
+}
+
+/********** Navigation********/
+
+#logo{
+  color:white !important;
+}
+
+nav{
+  background-color: #3AAFA9 !important;
+}
+.modal-header, h4, .close {
+  background-color:#3AAFA9;
+  color:white !important;
+  text-align: center;
+  font-size: 30px;
+}
+
+/************Showcase***********/
+
+#intro {
+  width: 100%;
+  height: 60vh;
+  position: relative;
+	background: url("../Images/intro-background.jpg") top center;
+  background-size: cover;
+}
+
+@media (min-width: 1024px) {
+	#intro {
+		background-attachment: fixed;
+	}
+}
+
+.intro-content {
+	background: rgba(0, 0, 0, 0.65);
+  position: absolute;
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+	padding: 0 15px;
+}
+
+.intro-content  h2 {
+  color: #fff !important;
+  margin-bottom: 30px;
+  font-size: 50px;
+  font-weight: 700;
+}
+
+@media (max-width: 767px) {
+	#intro {
+		height: 100vh;
+	}
+	.intro-content  h2 {
+		font-size: 34px;
+	}
+}
+
+/************ Features *************/
+
+  .features-icons {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+  
+  .features-icons .features-icons-item {
+    max-width: 20rem;
+  }
+  
+  .features-icons .features-icons-item .features-icons-icon {
+    height: 7rem;
+   }
+  
+  .features-icons .features-icons-item .features-icons-icon i {
+    font-size: 4.5rem;
+    color: #3AAFA9 !important;
+  }
+  
+  .features-icons .features-icons-item:hover .features-icons-icon i {
+    font-size: 5rem;
+  }
+  
+
+/*************** Image ShowCase **************/
+
+  .showcase .showcase-text {
+    padding: 3rem;
+  }
+  .showcase p{
+    font-size:20px;
+  }
+  .showcase .showcase-img {
+    min-height: 30rem;
+    background-size: cover;
+  }
+
+  @media (min-width: 768px) {
+    .showcase .showcase-text {
+      padding: 7rem;
+    }
+  }
+  
+/** Testimonials **/
+
+.testimonials {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  .testimonials .testimonial-item {
+    max-width: 18rem;
+  }
+  
+  .testimonials .testimonial-item img {
+    max-width: 12rem;
+    box-shadow: 0px 5px 5px 0px #adb5bd;
+  }
+  .testimonials h5,h2{
+    color: #3AAFA9 !important;
+  }
+/** Footer**/
+
+footer.footer {
+    color:white;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+    background-color: #3AAFA9 !important;
+}
+ 
+  
