@@ -25,18 +25,8 @@
  <br/>
   <h3 class="text-center display-4" style="font-size:35px;">Individual Peer Assessment Overview</h3>
     <div class="row">
-    
+      <?php include_once('../Database Layer/connection.php'); ?>
       <?php 
-
-            $servername = "mysql.cms.gre.ac.uk";
-            $username = "ac8441o";
-            $pws = "rebellio619";
-            $db = "mdb_ac8441o";
-            $studentID = $_GET['studentID'];
-
-
-              // connect to database
-            $conn = mysqli_connect($servername, $username, $pws, $db);
 
             $result = $conn->query("SELECT firstName,lastName,groupNo,profile_image,programme FROM Student_Credentials Where studentID= '$studentID'");
  

@@ -43,15 +43,8 @@
      </div>
     <div id="senior-rep" >
         <div class="Group-circle">
+              <?php include_once('../Database Layer/connection.php'); ?>
               <?php 
-
-                  $servername = "mysql.cms.gre.ac.uk";
-                  $username = "ac8441o";
-                  $pws = "rebellio619";
-                  $db = "mdb_ac8441o";
-
-                
-                  $conn = mysqli_connect($servername, $username, $pws, $db);
 
                   $result = $conn->query("SELECT studentID,firstName,lastName, programme,profile_image FROM Student_Credentials WHERE studentID <> '000000000'");
                    
