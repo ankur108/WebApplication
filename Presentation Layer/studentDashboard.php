@@ -28,6 +28,7 @@
       <br />
       <div id="senior-rep">
         <div class="Group-circle">
+      
           <?php include_once('../Database Layer/connection.php'); ?>
           <?php
 
@@ -40,13 +41,13 @@
             }
           }
 
-          $result = $conn->query("SELECT studentID,firstName,lastName, programme,profile_image FROM Student_Credentials Where groupNo = '$groupNo' AND studentID <> '$studentID' AND studentID <> '000000000' ");
+          $result = $conn->query("SELECT studentID,firstName,lastName, programme,profile_image,profile_image_type FROM Student_Credentials Where groupNo = '$groupNo' AND studentID <> '$studentID' AND studentID <> '000000000' ");
 
           if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
               echo "<div class='circles' style='text-align:center;'>";
               echo "<form action='studentGrade.php' method='get'>";
-              echo '<img src="data:image/jpeg;base64,'.base64_encode($row['profile_image']).'"/>';
+              echo "<img src='../Application Layer/imageView.php?studentID='".$row['studentID']."' />"; //Change This and you are done
               echo "<h2>" . $row["firstName"] . ' ' . $row["lastName"] . "</h2>";
               echo "<span>" . $row["programme"] . "</span><br/>";
               echo "<button type='submit' class='btn' name = 'studentID' value='" . $row["studentID"] . "' style='background-color:#3AAFA9;'><span class='glyphicon glyphicon-off'></span>Mark</button>";

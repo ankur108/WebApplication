@@ -64,7 +64,7 @@
           <h4><span class="glyphicon glyphicon-lock"></span>Sign Up</h4>
         </div>
         <div class="modal-body" style="padding:40px 50px;">
-          <form role="form" method="post" action="Application Layer/newCredentials.php">
+          <form role="form" method="post" action="Application Layer/newCredentials.php" enctype="multipart/form-data">
             <div class="form-group">
               <label for="FirstName"><span class="glyphicon glyphicon-user"></span>First Name</label>
               <input type="text" class="form-control" id="firstName" placeholder="Enter your First Name" name="firstName" required>
