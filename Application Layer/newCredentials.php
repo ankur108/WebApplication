@@ -8,6 +8,7 @@ if (isset($_POST['AccountBtn'])) {
     $lastName    =  $_POST["lastName"];
     $studentId    =  $_POST["newStudentId"];
     $newPassword     =  $_POST["newPassword"];
+    $confirmPassword     =  $_POST["confirmPassword"];
     $email     =  $_POST["newEmail"];
     $group     =  $_POST["newGroup"];
     $programme     =  $_POST["programme"];
@@ -15,31 +16,80 @@ if (isset($_POST['AccountBtn'])) {
     $Cap1 = $_SESSION['cap_hidden'];
     $Cap2 = $_POST['captchaInput'];
 
-    if ($Cap1 == $Cap2) {
+    $error = '';
 
-        $_SESSION["userID"] = $_POST["studentId"];
-        $sql = "INSERT INTO Student_Credentials  (firstName, lastName, studentID, webPassword,email,groupNo,profile_image,programme)
-        VALUES ( '$firstName' , '$lastName' , '$studentId','$newPassword ','$email','$group','$image','$programme')";
+    if (preg_match('/[^A-Za-z]/', $firstName)) {
+        $error .= '&invalidfirstname=firstname';
+    }
+    if (preg_match('/[^A-Za-z]/', $lastName)) {
+        $error .= '&invalidlastname=lastname';
+    }
+    if (preg_match('/[^0-9]/', $studentId) || strlen($studentId) != 9) {
+        $error .= '&invalidstudentId=studentId';
+    }
+    else
+    {
+        $result = $conn->query("SELECT studentID FROM Student_Credentials WHERE studentID='$studentId'");
 
-        if ($conn->query($sql) === TRUE) {
-
-            $result = $conn->query("SELECT firstName,lastName FROM Student_Credentials Where groupNo = '$group' ");
-
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-
-                    $_SESSION["user"] = $row["firstName"] . " " . $row["lastName"];
-                    $_SESSION["userID"] = $_POST["studentId"];
-                    header("Location: ..\Presentation Layer\studentDashboard.php");
-                    exit();
-                }
-            } else {
-                echo '<script type="text/javascript">alert("' . $sql . "<br>" . $conn->error . '")</script>';
-            }
-        } else {
-            echo '<script type="text/javascript">alert("Invalid Captcha")</script>';
-            echo "<script>window.open('/~ac8441o/','_self')</script>";
+        if($result->num_rows > 0)
+        {
+            $error .= '&duplicateId=duplicate';
         }
     }
+    
+    if ($newPassword != $confirmPassword) {
+        $error .= '&invalidpassword=password';
+    }
+
+    $numOfGroup = $conn->query("SELECT studentID FROM Student_Credentials WHERE groupNo='$group'");
+
+    if($numOfGroup->num_rows == 3)
+        {
+            $error .= '&groupNo=maxGroup';
+        }
+
+
+
+    if ($Cap1 != $Cap2) {
+        $error .= '&invalidcaptcha=captcha';
+    }
+
+    if ($image != NULL) {
+
+        if ($_FILES["image"]["size"] > 200000000) // If the file is larger than 2MB
+            {
+            $error .= '&invalidImage=largeImage';
+            }
+        if (strtolower(pathinfo($image, PATHINFO_EXTENSION)) != "jpg" && strtolower(pathinfo($image, PATHINFO_EXTENSION)) != "png" && strtolower(pathinfo($image, PATHINFO_EXTENSION)) != "jpeg"  && strtolower(pathinfo($image, PATHINFO_EXTENSION)) != "gif") {
+            //$error .= pathinfo($image, PATHINFO_EXTENSION);
+            $error .= '&invalidtype=wrongtype';
+            }
+    }
+
+
+
+    if (strlen($error) > 1) {
+            die(header("location:../index.php?newAccountFailed=true" . $error));
+        } 
+    else {
+
+            $finalImage = $_FILES["image"]["tmp_name"];
+        
+            $_SESSION["userID"] = $_POST["studentId"];
+            $sql = "INSERT INTO Student_Credentials  (firstName, lastName, studentID, webPassword,email,groupNo,profile_image,programme)
+            VALUES ( '$firstName' , '$lastName' , '$studentId','$newPassword ','$email','$group','$finalImage','$programme')";
+
+            if ($conn->query($sql) === TRUE) {
+
+                $_SESSION["userID"] = $_POST["newStudentId"];
+                $_SESSION["user"] = $firstName." ".$lastName;
+                header("Location: ..\Presentation Layer\studentDashboard.php"); //$row = mysqli_fetch_assoc($result);
+                exit();
+                }
+            else {
+                    echo '<script type="text/javascript">alert("' . $sql . "<br>" . $conn->error . '")</script>';
+                }
+        }
+    
 }
 ?>

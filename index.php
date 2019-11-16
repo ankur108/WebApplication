@@ -43,6 +43,7 @@
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
               <input type="password" class="form-control" id="psw" placeholder="Enter password" name="password" required>
+              <div style="color:red;font-weight:bold;"><?php if ($_GET["loginFailed"]) echo "Wrong Username or Password" ?></div>
             </div>
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
@@ -67,14 +68,17 @@
             <div class="form-group">
               <label for="FirstName"><span class="glyphicon glyphicon-user"></span>First Name</label>
               <input type="text" class="form-control" id="firstName" placeholder="Enter your First Name" name="firstName" required>
+              <div style="color:red;font-weight:bold;"><?php $reasons = array("firstname" => "Invalid First Name");if ($_GET["newAccountFailed"]) echo $reasons[$_GET["invalidfirstname"]]; ?></div>
             </div>
             <div class="form-group">
               <label for="LastName"><span class="glyphicon glyphicon-user"></span>Last Name</label>
               <input type="text" class="form-control" id="lastName" placeholder="Enter your Last Name" name="lastName" required>
+              <div style="color:red;font-weight:bold;"><?php $reasons = array("lastname" => "Invalid Last Name");if ($_GET["newAccountFailed"]) echo $reasons[$_GET["invalidlastname"]]; ?></div>
             </div>
-            <div class="form-group">
+              <div class="form-group">
               <label for="StudentID"><span class="glyphicon glyphicon-user"></span>Student ID</label>
-              <input type="text" class="form-control" id="newid" placeholder="Enter your 9 digit Student Number" name="newStudentId" required>
+              <input type="text" class="form-control" id="newid" placeholder="Enter your 9 digit Student Number" name="newStudentId"  maxlength ='9' required>
+              <div style="color:red;font-weight:bold;"><?php $reasons = array("studentId" => "Invalid Student ID Name", "duplicate" => "Student ID already exist");if ($_GET["newAccountFailed"]) echo $reasons[$_GET["invalidstudentId"]]; echo $reasons[$_GET["duplicateId"]];?></div>
             </div>
             <div class="form-group">
               <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
@@ -82,9 +86,10 @@
             </div>
             <div class="form-group">
               <label for="Confirm Password"><span class="glyphicon glyphicon-eye-open"></span>Confirm Password</label>
-              <input type="password" class="form-control" id="confirmpsw" placeholder="Confirm password" onChange="checkPasswordMatch();" required>
+              <input type="password" class="form-control" id="confirmpsw" placeholder="Confirm password" required name = "confirmPassword">
+              <div style="color:red;font-weight:bold;"><?php $reasons = array("password" => "Password Doesn't Match");if ($_GET["newAccountFailed"]) echo $reasons[$_GET["invalidpassword"]]; ?></div>
             </div>
-            <div id="CheckPasswordMatch" style="color:red;font-weight:bold;"></div>
+            
             <div class="form-group">
               <label for="Email"><span class="glyphicon glyphicon-eye-open"></span>Email</label>
               <input type="email" class="form-control" id="email" placeholder="Enter Your Email" name="newEmail" required>
@@ -113,13 +118,16 @@
                 <option value="9">Group IX</option>
                 <option value="10">Group X</option>
               </select>
+              <div style="color:red;font-weight:bold;"><?php $reasons = array("maxGroup" => "Unfortunately, there is no space left in the group");if ($_GET["newAccountFailed"]) echo $reasons[$_GET["groupNo"]]; ?></div>
             </div>
             <div class="form-group">
               <label for="Image"><span class="glyphicon glyphicon-eye-open"></span>Upload your Photo</label>
-              <input type="file" name="image" />
+              <input type="file" name="image" id="image"/>
+              <div style="color:red;font-weight:bold;"><?php $reasons = array("largeImage" => "Image too large, Please upload image of size less than 2 MB","wrongtype" => "Invalid Image format");if ($_GET["newAccountFailed"]) echo $reasons[$_GET["invalidImage"]]; echo $reasons[$_GET["invalidtype"]];?></div>
             </div>
             <div>
               <input type="text" class="form-control" id="captchaInput" placeholder="Enter the below visible text" name="captchaInput" required>
+              <div style="color:red;font-weight:bold;"><?php $reasons = array("captcha" => "Captcha Doesn't Match");if ($_GET["newAccountFailed"]) echo $reasons[$_GET["invalidcaptcha"]]; ?></div>
               <br />
               <div style="width:60%; border: 1px solid #ccc; text-align: center; padding: 3px; margin-bottom: 13px;"> <img src="Application Layer\reCaptcha.php" id="captcha" /></div>
               <label for="Programme"><span class="glyphicon glyphicon-eye-open"></span>Can't read the Captcha?</label>
@@ -131,7 +139,6 @@
       </div>
     </div>
   </div>
-
 
   <!-------------- Showcase ------------->
 
@@ -259,19 +266,13 @@
       $('#captcha').attr('src', 'Application Layer\\reCaptcha.php?' + (new Date()).getTime());
     });
   </script>
-
-  <script>
-    function checkPasswordMatch() {
-      var password = $("#psw").val();
-      var confirmPassword = $("#confirmpsw").val();
-
-
-      if (password != confirmPassword)
-        $("#CheckPasswordMatch").html("Passwords do not match!");
-      else
-        $("#CheckPasswordMatch").html("Passwords match.");
-    }
-  </script>
+  <?php
+      if($_GET["newAccountFailed"])
+          echo "<script>$(document).ready(function() { $('#signUpForm').modal();});</script>";
+      
+      if($_GET["loginFailed"])
+          echo "<script>$(document).ready(function() { $('#loginForm').modal();});</script>";
+  ?>
 
   <!--<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
 </body>

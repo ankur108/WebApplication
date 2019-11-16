@@ -29,7 +29,7 @@
                     }
                 else
                     {
-                      echo '<script type="text/javascript">alert("Wrong Student ID or Password")</script>';
+                      die(header("location:../index.php?loginFailed=true"));
                     }
               }
          }
